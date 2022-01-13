@@ -14,6 +14,6 @@ const token = (state = INITIAL_STATE, action) => {
   const verify = getToken[action.type];
   if (verify) return verify;
   return state;
-}
+};
 
 export default token;

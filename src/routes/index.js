@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import Login from '../pages/Login';
 import requestTokenAPI from '../services/requestToken';
 
 class Index extends Component {
@@ -9,12 +10,9 @@ class Index extends Component {
 
   render() {
     return (
-      // <Switch>
-      //   <Route exact path="/" component={ Login } />
-      // </Switch>
-      <>
-        Xablau
-      </>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+      </Switch>
     );
   }
 }

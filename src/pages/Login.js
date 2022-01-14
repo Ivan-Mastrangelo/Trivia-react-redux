@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
-import { connect } from 'react-redux';
+
+// import { connect } from 'react-redux';
 import { requestApiToken } from '../actions';
 
 class Login extends React.Component {
@@ -34,8 +36,8 @@ class Login extends React.Component {
 
   clickBtn = () => {
     const { getToken, token } = this.props;
-    getToken().then(() =>
-    localStorage.setItem('token', token))
+    getToken();
+    localStorage.setItem('token', token);
   };
 
   render() {
@@ -57,12 +59,17 @@ class Login extends React.Component {
   }
 }
 
+Login.propTypes = {
+  getToken: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(requestApiToken()),
 });
 
 const mapStateToProps = (state) => ({
-  token: state.token
+  token: state.token,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

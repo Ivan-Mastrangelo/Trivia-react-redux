@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
-
-// import { connect } from 'react-redux';
 import { requestApiToken } from '../actions';
 
 class Login extends React.Component {

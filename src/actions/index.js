@@ -8,9 +8,9 @@ export const actionUser = (payload) => ({
   payload,
 });
 
-export const actionToken = (payload) => ({
+export const actionToken = (token) => ({
   type: TOKEN_GAME,
-  payload,
+  token,
 });
 
 export const requestApiToken = () => (dispatch) => {

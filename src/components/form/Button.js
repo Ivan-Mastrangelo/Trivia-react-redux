@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 class Button extends React.Component {
   render() {
-    const { isDisable } = this.props;
+    const { isDisable, clickBtn } = this.props;
     return (
       <div>
         <button
           type="button"
           data-testid="btn-play"
           disabled={ isDisable }
+          onClick={ clickBtn }
         >
           Play
         </button>
@@ -20,6 +21,7 @@ class Button extends React.Component {
 
 Button.propTypes = {
   isDisable: PropTypes.bool.isRequired,
+  clickBtn: PropTypes.func.isRequired,
 };
 
 export default Button;

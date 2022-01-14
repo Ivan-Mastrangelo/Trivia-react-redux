@@ -1,14 +1,14 @@
 import { TOKEN_GAME } from '../actions';
 
 const INITIAL_STATE = {
-  id: '',
+  token: '',
 };
 
 const token = (state = INITIAL_STATE, action) => {
   const getToken = {
     [TOKEN_GAME]: {
       ...state,
-      id: action.payload,
+      token: action.payload,
     },
   };
   const verify = getToken[action.type];

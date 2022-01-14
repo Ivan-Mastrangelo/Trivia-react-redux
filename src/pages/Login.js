@@ -58,11 +58,6 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
-  getToken: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-};
-
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(requestApiToken()),
 });
@@ -70,5 +65,10 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   token: state.token,
 });
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

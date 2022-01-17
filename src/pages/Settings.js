@@ -5,6 +5,7 @@ class Settings extends React.Component {
     return (
       <div>
         <h3 data-testid="settings-title">Settings</h3>
+        <h3>Teste</h3>
       </div>
     );
   }

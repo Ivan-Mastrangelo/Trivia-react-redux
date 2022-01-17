@@ -1,3 +1,5 @@
+import requestTokenAPI from '../services/requestToken';
+
 export const USER_INFO = 'USER_INFO';
 export const TOKEN_GAME = 'TOKEN_GAME';
 
@@ -6,7 +8,12 @@ export const actionUser = (payload) => ({
   payload,
 });
 
-export const actionToken = (payload) => ({
+export const actionToken = (token) => ({
   type: TOKEN_GAME,
-  payload,
+  token,
 });
+
+export const requestApiToken = () => (dispatch) => {
+  requestTokenAPI()
+    .then((token) => dispatch(actionToken(token)));
+};

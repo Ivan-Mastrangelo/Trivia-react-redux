@@ -34,9 +34,10 @@ class Login extends React.Component {
   }
 
   clickBtn = () => {
-    const { getToken, token } = this.props;
+    const { getToken, token, history } = this.props;
     getToken();
     localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   render() {
@@ -69,6 +70,9 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

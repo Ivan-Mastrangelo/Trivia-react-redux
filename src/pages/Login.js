@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
 import { requestApiToken } from '../actions';
+import ButtonSettings from '../components/form/ButtonSettings';
 
 class Login extends React.Component {
   constructor() {
@@ -39,8 +40,13 @@ class Login extends React.Component {
     localStorage.setItem('token', token);
   };
 
+  clickBtnSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
-    const { handleChange, clickBtn } = this;
+    const { handleChange, clickBtn, clickBtnSettings } = this;
     const { email, name, isDisable } = this.state;
     return (
       <div>
@@ -52,6 +58,9 @@ class Login extends React.Component {
         <Button
           isDisable={ isDisable }
           clickBtn={ clickBtn }
+        />
+        <ButtonSettings
+          clickBtn={ clickBtnSettings }
         />
       </div>
     );
@@ -69,6 +78,9 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

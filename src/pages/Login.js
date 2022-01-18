@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
-import { requestApiToken } from '../actions';
+import { actionUser, requestApiToken } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
+      gravatarEmail: '',
       name: '',
+      score: 0,
       isDisable: true,
     };
   }
@@ -20,9 +21,9 @@ class Login extends React.Component {
   }
 
   enableBtn = () => {
-    const { email, name } = this.state;
+    const { gravatarEmail, name } = this.state;
     const zero = 0;
-    if (email.length > zero && name.length > zero) {
+    if (gravatarEmail.length > zero && name.length > zero) {
       this.setState({
         isDisable: false,
       });
@@ -34,19 +35,21 @@ class Login extends React.Component {
   }
 
   clickBtn = () => {
-    const { getToken, token } = this.props;
+    const { getToken, token, history, getInfoUser } = this.props;
+    getInfoUser(this.state);
     getToken();
     localStorage.setItem('token', token);
+    history.push('/game');
   };
 
   render() {
     const { handleChange, clickBtn } = this;
-    const { email, name, isDisable } = this.state;
+    const { gravatarEmail, name, isDisable } = this.state;
     return (
       <div>
         <Inputs
           handleChange={ handleChange }
-          email={ email }
+          gravatarEmail={ gravatarEmail }
           name={ name }
         />
         <Button
@@ -60,6 +63,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(requestApiToken()),
+  getInfoUser: (state) => dispatch(actionUser(state)),
 });
 
 const mapStateToProps = (state) => ({
@@ -69,6 +73,10 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  getInfoUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

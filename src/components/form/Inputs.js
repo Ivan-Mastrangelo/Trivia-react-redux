@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Inputs extends React.Component {
   render() {
-    const { email, name, handleChange } = this.props;
+    const { gravatarEmail, name, handleChange } = this.props;
     return (
       <div>
         <label htmlFor="name">
@@ -21,8 +21,8 @@ class Inputs extends React.Component {
           <input
             type="email"
             data-testid="input-gravatar-email"
-            name="email"
-            value={ email }
+            name="gravatarEmail"
+            value={ gravatarEmail }
             onChange={ handleChange }
           />
         </label>
@@ -32,7 +32,7 @@ class Inputs extends React.Component {
 }
 
 Inputs.propTypes = {
-  email: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

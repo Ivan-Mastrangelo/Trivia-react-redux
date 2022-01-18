@@ -8,18 +8,18 @@ const INITIAL_STATE = {
 };
 
 const player = (state = INITIAL_STATE, action) => {
-  const playerInfo = {
-    [USER_INFO]: {
+  switch (action.type) {
+  case USER_INFO:
+    return {
       ...state,
-      name: action.payload,
-      assertions: action.payload,
-      score: action.payload,
-      gravatarEmail: action.payload,
-    },
-  };
-  const verify = playerInfo[action.type];
-  if (verify) return verify;
-  return state;
+      name: action.payload.name,
+      assertions: action.payload.assertions,
+      score: action.payload.score,
+      gravatarEmail: action.payload.gravatarEmail,
+    };
+  default:
+    return state;
+  }
 };
 
 export default player;

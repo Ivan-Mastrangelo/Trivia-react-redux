@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
 import { actionUser, requestApiToken } from '../actions';
+import ButtonSettings from '../components/form/ButtonSettings';
 
 class Login extends React.Component {
   constructor() {
@@ -42,9 +43,14 @@ class Login extends React.Component {
     history.push('/game');
   };
 
+  clickBtnSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
-    const { handleChange, clickBtn } = this;
     const { gravatarEmail, name, isDisable } = this.state;
+    const { handleChange, clickBtn, clickBtnSettings } = this;
     return (
       <div>
         <Inputs
@@ -55,6 +61,9 @@ class Login extends React.Component {
         <Button
           isDisable={ isDisable }
           clickBtn={ clickBtn }
+        />
+        <ButtonSettings
+          clickBtn={ clickBtnSettings }
         />
       </div>
     );

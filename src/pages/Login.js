@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
-import { actionUser, requestApiToken } from '../actions';
+import { actionUser, requestApiToken, requestApiGame } from '../actions';
 import ButtonSettings from '../components/form/ButtonSettings';
 
 class Login extends React.Component {
@@ -35,10 +35,11 @@ class Login extends React.Component {
     }
   }
 
-  clickBtn = () => {
-    const { getToken, history, getInfoUser } = this.props;
+  clickBtn = async () => {
+    const { getToken, history, getInfoUser, getQuestions } = this.props;
     getInfoUser(this.state);
-    getToken();
+    await getToken();
+    await getQuestions();
     history.push('/game');
   };
 
@@ -72,6 +73,7 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(requestApiToken()),
   getInfoUser: (state) => dispatch(actionUser(state)),
+  getQuestions: () => dispatch(requestApiGame()),
 });
 
 const mapStateToProps = (state) => ({

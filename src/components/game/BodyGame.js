@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AnswersButtons from './components/AnswersButtons';
+// import AnswersButtons from './components/AnswersButtons';
 import Heading from './components/Heading';
 
 class BodyGame extends Component {
   render() {
-    const { getResults, loading } = this.props;
-    console.log(getResults);
+    const { loading } = this.props;
     return (
       (!loading && (
         <>
-          <Heading getResults={ getResults } />
-          <AnswersButtons getResults={ getResults } />
+          <Heading />
+          {/* <AnswersButtons /> */}
         </>
       ))
     );
@@ -19,8 +18,7 @@ class BodyGame extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  getResults: state.game.results,
-  loading: state.game.results,
+  loading: state.game.loading,
 });
 
 export default connect(mapStateToProps)(BodyGame);

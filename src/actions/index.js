@@ -44,6 +44,6 @@ export const requestApiGame = () => (dispatch) => {
   requestGameAPI(getToken)
     .then((game) => {
       dispatch(actionGame(game));
+      dispatch(stopLoading());
     });
-  dispatch(stopLoading());
 };

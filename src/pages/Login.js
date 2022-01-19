@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
-import { actionUser, requestApiToken, requestApiGame } from '../actions';
+import { actionUser, requestApiToken } from '../actions';
 import ButtonSettings from '../components/form/ButtonSettings';
 
 class Login extends React.Component {
@@ -35,12 +36,10 @@ class Login extends React.Component {
     }
   }
 
-  clickBtn = async () => {
-    const { getToken, history, getInfoUser, getQuestions } = this.props;
+  clickBtn = () => {
+    const { getToken, getInfoUser } = this.props;
     getInfoUser(this.state);
-    await getToken();
-    await getQuestions();
-    history.push('/game');
+    getToken();
   };
 
   clickBtnSettings = () => {
@@ -49,6 +48,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { token } = this.props;
     const { gravatarEmail, name, isDisable } = this.state;
     const { handleChange, clickBtn, clickBtnSettings } = this;
     return (
@@ -65,6 +65,7 @@ class Login extends React.Component {
         <ButtonSettings
           clickBtn={ clickBtnSettings }
         />
+        {token && <Redirect to="/game" />}
       </div>
     );
   }
@@ -73,7 +74,6 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getToken: () => dispatch(requestApiToken()),
   getInfoUser: (state) => dispatch(actionUser(state)),
-  getQuestions: () => dispatch(requestApiGame()),
 });
 
 const mapStateToProps = (state) => ({

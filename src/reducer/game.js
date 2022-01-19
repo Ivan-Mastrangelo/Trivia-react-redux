@@ -1,7 +1,7 @@
-import { TOKEN_QUESTIONS } from '../actions';
+import { TOKEN_QUESTIONS, START_LOADING, STOP_LOADING } from '../actions';
 
 const INITIAL_STATE = {
-  results: [],
+  loading: false,
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -10,6 +10,16 @@ const game = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       results: action.payload,
+    };
+  case START_LOADING:
+    return {
+      ...state,
+      loading: true,
+    };
+  case STOP_LOADING:
+    return {
+      ...state,
+      loading: false,
     };
   default:
     return state;

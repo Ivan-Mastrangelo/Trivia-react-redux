@@ -4,6 +4,8 @@ import requestGameAPI from '../services/requestApiGame';
 export const USER_INFO = 'USER_INFO';
 export const TOKEN_GAME = 'TOKEN_GAME';
 export const TOKEN_QUESTIONS = 'TOKEN_QUESTIONS';
+export const START_LOADING = 'START_LOADING';
+export const STOP_LOADING = 'STOP_LOADING';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -15,9 +17,17 @@ export const actionToken = (token) => ({
   token,
 });
 
-export const actionGame = (token) => ({
+export const actionGame = (payload) => ({
   type: TOKEN_QUESTIONS,
-  token,
+  payload,
+});
+
+export const startLoading = () => ({
+  type: START_LOADING,
+});
+
+export const stopLoading = () => ({
+  type: STOP_LOADING,
 });
 
 export const requestApiToken = () => (dispatch) => {
@@ -30,9 +40,10 @@ export const requestApiToken = () => (dispatch) => {
 
 export const requestApiGame = () => (dispatch) => {
   const getToken = localStorage.getItem('token');
+  dispatch(startLoading());
   requestGameAPI(getToken)
     .then((game) => {
-      localStorage.setItem('game', game.results);
       dispatch(actionGame(game));
     });
+  dispatch(stopLoading());
 };

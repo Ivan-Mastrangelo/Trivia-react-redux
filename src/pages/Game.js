@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { requestApiGame } from '../actions';
 import BodyGame from '../components/game/BodyGame';
 import Header from '../components/game/Header';
 
 class Game extends Component {
+
+  componentDidMount() {
+    const { getQuestions } = this.props;
+    getQuestions();
+  }
+
   render() {
-    const { getResults, loading } = this.props;
-    console.log(getResults);
+    const { loading } = this.props;
     return (
       <div>
+        teste
         {!loading && (
           <>
             <Header />
@@ -24,4 +31,8 @@ const mapStateToProps = (state) => ({
   loading: state.game.loading,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  getQuestions: () => dispatch(requestApiGame()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

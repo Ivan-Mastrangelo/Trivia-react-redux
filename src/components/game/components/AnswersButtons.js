@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class AnswersButtons extends Component {
   constructor() {
@@ -53,4 +54,8 @@ class AnswersButtons extends Component {
   }
 }
 
-export default AnswersButtons;
+const mapStateToProps = (state) => ({
+  getResults: state.game.results,
+});
+
+export default connect(mapStateToProps)(AnswersButtons);

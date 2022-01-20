@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class AnswersButtons extends Component {
   constructor() {
     super();
     this.state = {
       arrayAnswers: [],
-      color: '',
+      buttonCorrectAnswer: '',
+      buttonIncorrectAnswer: '',
     };
   }
 
@@ -14,18 +16,11 @@ class AnswersButtons extends Component {
     this.aleatoryAnswers();
   }
 
-  clickButton = ({ target }) => {
-    const { value } = target;
-    if (value === 'correct') {
-      this.setState({
-        color: '3px solid rgb(6, 240, 15)',
-      });
-    }
-    if (value === 'incorret') {
-      this.setState({
-        color: '3px solid rgb(255, 0, 0)',
-      });
-    }
+  setColorsOnClick = () => {
+    this.setState({
+      buttonCorrectAnswer: '3px solid rgb(6, 240, 15)',
+      buttonIncorrectAnswer: '3px solid rgb(255, 0, 0)',
+    });
   }
 
   aleatoryAnswers() {
@@ -33,12 +28,14 @@ class AnswersButtons extends Component {
     if (getResults.length > 0) {
       const correctAnswer = getResults[0].correct_answer;
       const arrayIncorrectAnswers = getResults[0].incorrect_answers;
-      const correct_answers = { correctAnswer };
-      const incorrectAnswers = arrayIncorrectAnswers.map((incorrectAnswers) => ({
-        incorrectAnswers,
+      // const correct_answer mudada para getCorrectAnswer por n estar em CamelCase
+      const getCorrectAnswers = { correctAnswer };
+      // parametro inccorectAnswers mudado para answersWron(responstas erradas) por estadar declarado na const
+      const incorrectAnswers = arrayIncorrectAnswers.map((answersWrong) => ({
+        incorrectAnswers: answersWrong,
       }));
       // https://flaviocopes.com/how-to-shuffle-array-javascript/
-      const arrWithAnswers = [correct_answers, ...incorrectAnswers];
+      const arrWithAnswers = [getCorrectAnswers, ...incorrectAnswers];
       const magicNumber = 0.5;
       const newArrAleatory = arrWithAnswers.sort(() => Math.random() - magicNumber);
       this.setState({
@@ -48,7 +45,7 @@ class AnswersButtons extends Component {
   }
 
   render() {
-    const { color, arrayAnswers } = this.state;
+    const { buttonCorrectAnswer, buttonIncorrectAnswer, arrayAnswers } = this.state;
     return (
       <div
         data-testid="answer-options"
@@ -60,8 +57,8 @@ class AnswersButtons extends Component {
                 type="button"
                 value="correct"
                 data-testid="correct-answer"
-                onClick={ (e) => this.clickButton(e) }
-                style={{ border: color }}
+                onClick={ this.setColorsOnClick }
+                style={ { border: buttonCorrectAnswer } }
               >
                 {correctAnswer}
               </button>
@@ -73,8 +70,8 @@ class AnswersButtons extends Component {
               type="button"
               value="incorrect"
               data-testid={ `wrong-answer-${index}` }
-              onClick={ (e) => this.clickButton(e) }
-              style={{ border: color }}
+              onClick={ this.setColorsOnClick }
+              style={ { border: buttonIncorrectAnswer } }
             >
               {incorrectAnswers}
             </button>
@@ -90,3 +87,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(AnswersButtons);
+
+AnswersButtons.propTypes = {
+  getResults: PropTypes.arrayOf(PropTypes.any).isRequired,
+};

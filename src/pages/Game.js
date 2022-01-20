@@ -15,7 +15,6 @@ class Game extends Component {
     const { loading } = this.props;
     return (
       <div>
-        teste
         {!loading && (
           <>
             <Header />

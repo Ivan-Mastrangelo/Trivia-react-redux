@@ -33,7 +33,6 @@ export const stopLoading = () => ({
 export const requestApiToken = () => (dispatch) => {
   requestTokenAPI()
     .then((token) => {
-      console.log('teste token', token);
       localStorage.setItem('token', token.token);
       dispatch(actionToken(token));
     });

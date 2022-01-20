@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Inputs from '../components/form/Inputs';
 import Button from '../components/form/Button';
 import { actionUser, requestApiToken } from '../actions';
@@ -36,11 +37,9 @@ class Login extends React.Component {
   }
 
   clickBtn = () => {
-    const { getToken, token, history, getInfoUser } = this.props;
+    const { getToken, getInfoUser } = this.props;
     getInfoUser(this.state);
     getToken();
-    localStorage.setItem('token', token);
-    history.push('/game');
   };
 
   clickBtnSettings = () => {
@@ -49,6 +48,7 @@ class Login extends React.Component {
   }
 
   render() {
+    const { token } = this.props;
     const { gravatarEmail, name, isDisable } = this.state;
     const { handleChange, clickBtn, clickBtnSettings } = this;
     return (
@@ -65,6 +65,8 @@ class Login extends React.Component {
         <ButtonSettings
           clickBtn={ clickBtnSettings }
         />
+        {/* Solução de redirect pedida na mentoria da Samantha/Arthur */}
+        {token && <Redirect to="/game" />}
       </div>
     );
   }
@@ -81,8 +83,8 @@ const mapStateToProps = (state) => ({
 
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
   getInfoUser: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

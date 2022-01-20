@@ -54,6 +54,7 @@ class AnswersButtons extends Component {
           if (correctAnswer) {
             return (
               <button
+                key={ correctAnswer }
                 type="button"
                 value="correct"
                 data-testid="correct-answer"

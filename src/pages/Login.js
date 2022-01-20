@@ -65,6 +65,7 @@ class Login extends React.Component {
         <ButtonSettings
           clickBtn={ clickBtnSettings }
         />
+        {/* Solução de redirect pedida na mentoria da Samantha/Arthur */}
         {token && <Redirect to="/game" />}
       </div>
     );

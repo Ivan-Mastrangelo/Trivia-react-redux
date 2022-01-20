@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import AnswersButtons from './components/AnswersButtons';
+import AnswersButtons from './components/AnswersButtons';
 import Heading from './components/Heading';
 
 class BodyGame extends Component {
@@ -10,7 +10,7 @@ class BodyGame extends Component {
       (!loading && (
         <>
           <Heading />
-          {/* <AnswersButtons /> */}
+          <AnswersButtons />
         </>
       ))
     );

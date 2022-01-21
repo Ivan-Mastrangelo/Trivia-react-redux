@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { requestApiGame } from '../actions';
 import BodyGame from '../components/game/BodyGame';
 import Header from '../components/game/Header';
 
 class Game extends Component {
-
   componentDidMount() {
     const { getQuestions } = this.props;
     getQuestions();
@@ -33,5 +33,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(requestApiGame()),
 });
+
+Game.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  getQuestions: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

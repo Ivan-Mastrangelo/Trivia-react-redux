@@ -10,6 +10,7 @@ from '../actions';
 const INITIAL_STATE = {
   results: [],
   loading: false,
+  stopTimer: false,
 };
 
 const game = (state = INITIAL_STATE, action) => {

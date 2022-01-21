@@ -6,6 +6,8 @@ export const TOKEN_GAME = 'TOKEN_GAME';
 export const TOKEN_QUESTIONS = 'TOKEN_QUESTIONS';
 export const START_LOADING = 'START_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';
+export const TIME_OUT = 'TIME_OUT';
+export const TIME_IN = 'TIME_IN';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -60,3 +62,11 @@ export const requestApiGame = () => async (dispatch, getState) => {
   dispatch(actionGame(resultRequest));
   dispatch(stopLoading());
 };
+
+export const timeOut = () => ({
+  type: TIME_OUT,
+});
+
+export const timeIn = () => ({
+  type: TIME_IN,
+});

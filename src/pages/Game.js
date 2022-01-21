@@ -34,6 +34,11 @@ const mapDispatchToProps = (dispatch) => ({
   getQuestions: () => dispatch(requestApiGame()),
 });
 
+Game.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  getQuestions: PropTypes.func.isRequired,
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {

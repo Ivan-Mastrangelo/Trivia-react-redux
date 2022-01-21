@@ -40,14 +40,27 @@ export const requestApiToken = () => (dispatch) => {
     });
 };
 
-export const requestApiGame = () => (dispatch) => {
-  const getToken = localStorage.getItem('token');
+export const requestApiGame = () => async (dispatch, getState) => {
+  const { token } = getState();
+  // Ref: ajuda lógica com a Fumagalli e da Priscilla na questão do token vazio
+  if (token === '') {
+    await dispatch(requestTokenAPI());
+    return dispatch(requestApiGame());
+  }
   dispatch(startLoading());
-  requestGameAPI(getToken)
-    .then((game) => {
-      dispatch(actionGame(game));
-      dispatch(stopLoading());
-    });
+  const resultRequest = await requestGameAPI(token);
+  const errorNumber = 3;
+  if (resultRequest.response_code === errorNumber) {
+    // como no async await estava retornando um promise, tive que ir na mentoria do Paulo para solucionar a questão do then
+    requestTokenAPI()
+      .then((newToken) => {
+        localStorage.setItem('token', newToken.token);
+        dispatch(actionToken(newToken));
+        return dispatch(requestApiGame());
+      });
+  }
+  dispatch(actionGame(resultRequest));
+  dispatch(stopLoading());
 };
 
 export const timeOut = () => ({

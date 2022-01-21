@@ -65,6 +65,7 @@ class Login extends React.Component {
         <ButtonSettings
           clickBtn={ clickBtnSettings }
         />
+        {/* Solução de redirect pedida na mentoria da Samantha/Arthur */}
         {token && <Redirect to="/game" />}
       </div>
     );
@@ -83,6 +84,7 @@ const mapStateToProps = (state) => ({
 Login.propTypes = {
   getToken: PropTypes.func.isRequired,
   getInfoUser: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

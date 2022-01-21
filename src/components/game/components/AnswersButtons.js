@@ -46,6 +46,7 @@ class AnswersButtons extends Component {
 
   render() {
     const { buttonCorrectAnswer, buttonIncorrectAnswer, arrayAnswers } = this.state;
+    const { onOffBtn } = this.props;
     return (
       <div
         data-testid="answer-options"
@@ -59,6 +60,7 @@ class AnswersButtons extends Component {
                 data-testid="correct-answer"
                 onClick={ this.setColorsOnClick }
                 style={ { border: buttonCorrectAnswer } }
+                disabled={ onOffBtn }
               >
                 {correctAnswer}
               </button>
@@ -72,6 +74,7 @@ class AnswersButtons extends Component {
               data-testid={ `wrong-answer-${index}` }
               onClick={ this.setColorsOnClick }
               style={ { border: buttonIncorrectAnswer } }
+              disabled={ onOffBtn }
             >
               {incorrectAnswers}
             </button>
@@ -84,10 +87,12 @@ class AnswersButtons extends Component {
 
 const mapStateToProps = (state) => ({
   getResults: state.game.results,
+  onOffBtn: state.game.stopTimer,
 });
 
 export default connect(mapStateToProps)(AnswersButtons);
 
 AnswersButtons.propTypes = {
   getResults: PropTypes.arrayOf(PropTypes.any).isRequired,
+  onOffBtn: PropTypes.bool.isRequired,
 };

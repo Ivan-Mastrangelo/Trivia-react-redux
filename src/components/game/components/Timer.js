@@ -7,7 +7,7 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 3,
+      counter: 30,
     };
   }
 
@@ -15,20 +15,16 @@ class Timer extends React.Component {
     this.playCounter();
   }
 
-  componentWillUnmount() {
-    clearInterval(this.inCount());
+  componentDidUpdate() {
+    const { isTimeEnded } = this.props;
+    const { counter } = this.state;
+    if (counter <= 0) {
+      clearInterval(this.inCount);
+      isTimeEnded();
+    }
   }
 
   playCounter = () => {
-    const { isTimeEnded } = this.props;
-    const { counter } = this.state;
-    while (counter > 0) {
-      this.inCounter();
-    }
-    isTimeEnded();
-  }
-
-  inCounter = () => {
     const interval = 1000;
     this.inCount = setInterval(() => {
       this.setState((prevState) => ({

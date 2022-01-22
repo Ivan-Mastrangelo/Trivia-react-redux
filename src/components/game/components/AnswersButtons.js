@@ -12,11 +12,13 @@ class AnswersButtons extends Component {
       buttonIncorrectAnswer: '',
       difficulty: '',
       statusButton: 'hidden',
+      index: 0,
     };
   }
 
   componentDidMount() {
-    this.aleatoryAnswers();
+    const { index } = this.state;
+    this.aleatoryAnswers(index);
   }
 
   setColorsOnClick = ({ target }) => {
@@ -35,16 +37,26 @@ class AnswersButtons extends Component {
     });
   }
 
-  aleatoryAnswers() {
+  handleClickIndex = () => {
+    const { index } = this.state;
+    this.setState(({
+      index: index + 1,
+    }), () => {
+      const { index: indexQuestion } = this.state;
+      this.aleatoryAnswers(indexQuestion);
+    });
+  }
+
+  aleatoryAnswers(index) {
     const { getResults } = this.props;
     if (getResults.length > 0) {
-      const { difficulty } = getResults[0];
+      const { difficulty } = getResults[index];
       // const difficulty = getResults[0].difficulty;
       this.setState({
         difficulty,
       });
-      const correctAnswer = getResults[0].correct_answer;
-      const arrayIncorrectAnswers = getResults[0].incorrect_answers;
+      const correctAnswer = getResults[index].correct_answer;
+      const arrayIncorrectAnswers = getResults[index].incorrect_answers;
       // const correct_answer mudada para getCorrectAnswer por n estar em CamelCase
       const getCorrectAnswers = { correctAnswer };
       // parametro inccorectAnswers mudado para answersWron(responstas erradas) por estadar declarado na const
@@ -66,6 +78,7 @@ class AnswersButtons extends Component {
       buttonIncorrectAnswer,
       arrayAnswers,
       statusButton,
+      index,
     } = this.state;
     const { onOffBtn } = this.props;
     return (
@@ -73,7 +86,7 @@ class AnswersButtons extends Component {
         <div
           data-testid="answer-options"
         >
-          {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, index) => {
+          {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, indexQuestion) => {
             if (correctAnswer) {
               return (
                 <button
@@ -94,7 +107,7 @@ class AnswersButtons extends Component {
                 key={ incorrectAnswers }
                 type="button"
                 value="incorrect"
-                data-testid={ `wrong-answer-${index}` }
+                data-testid={ `wrong-answer-${indexQuestion}` }
                 onClick={ this.setColorsOnClick }
                 style={ { border: buttonIncorrectAnswer } }
                 disabled={ onOffBtn }
@@ -104,7 +117,11 @@ class AnswersButtons extends Component {
             );
           })}
         </div>
-        <NextButton statusButton={ statusButton } />
+        <NextButton
+          statusButton={ statusButton }
+          handleClickIndex={ this.handleClickIndex }
+          index={ index }
+        />
       </>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import NextButton from './NextButton';
 
 class AnswersButtons extends Component {
   constructor() {
@@ -10,11 +11,14 @@ class AnswersButtons extends Component {
       buttonCorrectAnswer: '',
       buttonIncorrectAnswer: '',
       difficulty: '',
+      statusButton: 'hidden',
+      index: 0,
     };
   }
 
   componentDidMount() {
-    this.aleatoryAnswers();
+    const { index } = this.state;
+    this.aleatoryAnswers(index);
   }
 
   setColorsOnClick = ({ target }) => {
@@ -24,23 +28,35 @@ class AnswersButtons extends Component {
       buttonCorrectAnswer: '3px solid rgb(6, 240, 15)',
       buttonIncorrectAnswer: '3px solid rgb(255, 0, 0)',
     });
-    console.log(target.difficulty);
     if (target.value === 'correct') {
       acertouMizeravi(difficulty);
     }
     limparIntervalo();
+    this.setState({
+      statusButton: 'visible',
+    });
   }
 
-  aleatoryAnswers() {
+  handleClickIndex = () => {
+    const { index } = this.state;
+    this.setState(({
+      index: index + 1,
+    }), () => {
+      const { index: indexQuestion } = this.state;
+      this.aleatoryAnswers(indexQuestion);
+    });
+  }
+
+  aleatoryAnswers(index) {
     const { getResults } = this.props;
     if (getResults.length > 0) {
-      const { difficulty } = getResults[0];
+      const { difficulty } = getResults[index];
       // const difficulty = getResults[0].difficulty;
       this.setState({
         difficulty,
       });
-      const correctAnswer = getResults[0].correct_answer;
-      const arrayIncorrectAnswers = getResults[0].incorrect_answers;
+      const correctAnswer = getResults[index].correct_answer;
+      const arrayIncorrectAnswers = getResults[index].incorrect_answers;
       // const correct_answer mudada para getCorrectAnswer por n estar em CamelCase
       const getCorrectAnswers = { correctAnswer };
       // parametro inccorectAnswers mudado para answersWron(responstas erradas) por estadar declarado na const
@@ -58,43 +74,55 @@ class AnswersButtons extends Component {
   }
 
   render() {
-    const { buttonCorrectAnswer, buttonIncorrectAnswer, arrayAnswers } = this.state;
+    const { buttonCorrectAnswer,
+      buttonIncorrectAnswer,
+      arrayAnswers,
+      statusButton,
+      index,
+    } = this.state;
     const { onOffBtn } = this.props;
     return (
-      <div
-        data-testid="answer-options"
-      >
-        {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, index) => {
-          if (correctAnswer) {
+      <>
+        <div
+          data-testid="answer-options"
+        >
+          {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, indexQuestion) => {
+            if (correctAnswer) {
+              return (
+                <button
+                  key={ correctAnswer }
+                  type="button"
+                  value="correct"
+                  data-testid="correct-answer"
+                  onClick={ this.setColorsOnClick }
+                  style={ { border: buttonCorrectAnswer } }
+                  disabled={ onOffBtn }
+                >
+                  {correctAnswer}
+                </button>
+              );
+            }
             return (
               <button
-                key={ correctAnswer }
+                key={ incorrectAnswers }
                 type="button"
-                value="correct"
-                data-testid="correct-answer"
+                value="incorrect"
+                data-testid={ `wrong-answer-${indexQuestion}` }
                 onClick={ this.setColorsOnClick }
-                style={ { border: buttonCorrectAnswer } }
+                style={ { border: buttonIncorrectAnswer } }
                 disabled={ onOffBtn }
               >
-                {correctAnswer}
+                {incorrectAnswers}
               </button>
             );
-          }
-          return (
-            <button
-              key={ incorrectAnswers }
-              type="button"
-              value="incorrect"
-              data-testid={ `wrong-answer-${index}` }
-              onClick={ this.setColorsOnClick }
-              style={ { border: buttonIncorrectAnswer } }
-              disabled={ onOffBtn }
-            >
-              {incorrectAnswers}
-            </button>
-          );
-        })}
-      </div>
+          })}
+        </div>
+        <NextButton
+          statusButton={ statusButton }
+          handleClickIndex={ this.handleClickIndex }
+          index={ index }
+        />
+      </>
     );
   }
 }

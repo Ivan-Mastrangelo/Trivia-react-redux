@@ -4,6 +4,7 @@ import {
   STOP_LOADING,
   TIME_OUT,
   TIME_IN,
+  INDEX_QUESTION,
 }
 from '../actions';
 
@@ -11,6 +12,7 @@ const INITIAL_STATE = {
   results: [],
   loading: false,
   stopTimer: false,
+  index: 0,
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -39,6 +41,11 @@ const game = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       stopTimer: false,
+    };
+  case INDEX_QUESTION:
+    return {
+      ...state,
+      index: action.payload,
     };
   default:
     return state;

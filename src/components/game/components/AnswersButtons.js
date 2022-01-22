@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NextButton from './NextButton';
+import { actionIndex } from '../../../actions';
 
 class AnswersButtons extends Component {
   constructor() {
@@ -39,11 +40,13 @@ class AnswersButtons extends Component {
 
   handleClickIndex = () => {
     const { index } = this.state;
+    const { getIndex } = this.props;
     this.setState(({
       index: index + 1,
     }), () => {
       const { index: indexQuestion } = this.state;
       this.aleatoryAnswers(indexQuestion);
+      getIndex(indexQuestion);
     });
   }
 
@@ -51,6 +54,7 @@ class AnswersButtons extends Component {
     const { getResults } = this.props;
     if (getResults.length > 0) {
       const { difficulty } = getResults[index];
+      console.log(difficulty);
       // const difficulty = getResults[0].difficulty;
       this.setState({
         difficulty,
@@ -132,11 +136,16 @@ const mapStateToProps = (state) => ({
   onOffBtn: state.game.stopTimer,
 });
 
-export default connect(mapStateToProps)(AnswersButtons);
+const mapDispatchToProps = (dispatch) => ({
+  getIndex: (index) => dispatch(actionIndex(index)),
+});
 
 AnswersButtons.propTypes = {
   getResults: PropTypes.arrayOf(PropTypes.any).isRequired,
   onOffBtn: PropTypes.bool.isRequired,
   acertouMizeravi: PropTypes.func.isRequired,
   limparIntervalo: PropTypes.func.isRequired,
+  getIndex: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnswersButtons);

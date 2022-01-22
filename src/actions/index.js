@@ -9,6 +9,7 @@ export const STOP_LOADING = 'STOP_LOADING';
 export const TIME_OUT = 'TIME_OUT';
 export const TIME_IN = 'TIME_IN';
 export const NEW_SCORE = 'NEW_SCORE';
+export const INDEX_QUESTION = 'INDEX_QUESTION';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -31,6 +32,24 @@ export const startLoading = () => ({
 
 export const stopLoading = () => ({
   type: STOP_LOADING,
+});
+
+export const actionIndex = (payload) => ({
+  type: INDEX_QUESTION,
+  payload,
+});
+
+export const timeOut = () => ({
+  type: TIME_OUT,
+});
+
+export const timeIn = () => ({
+  type: TIME_IN,
+});
+
+export const newScore = (payload) => ({
+  type: NEW_SCORE,
+  payload,
 });
 
 export const requestApiToken = () => (dispatch) => {
@@ -63,16 +82,3 @@ export const requestApiGame = () => async (dispatch, getState) => {
   dispatch(actionGame(resultRequest));
   dispatch(stopLoading());
 };
-
-export const timeOut = () => ({
-  type: TIME_OUT,
-});
-
-export const timeIn = () => ({
-  type: TIME_IN,
-});
-
-export const newScore = (payload) => ({
-  type: NEW_SCORE,
-  payload,
-});

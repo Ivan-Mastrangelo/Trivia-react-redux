@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class NextButton extends Component {
+  handleClick = () => {
+    const { handleClickIndex } = this.props;
+    handleClickIndex();
+  }
+
   render() {
-    const { statusButton, handleClickIndex } = this.props;
+    const { statusButton } = this.props;
     return (
       <button
         type="button"
         data-testid="btn-next"
         style={ { visibility: statusButton } }
-        onClick={ () => handleClickIndex() }
+        onClick={ () => this.handleClick() }
       >
         Next
       </button>

@@ -97,11 +97,11 @@ const mapDispatchToProps = (dispatch) => ({
   scoreUpdate: (data) => dispatch(newScore(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BodyGame);
-
 BodyGame.propTypes = {
   loading: PropTypes.bool.isRequired,
   getEmail: PropTypes.string.isRequired,
   getName: PropTypes.string.isRequired,
   scoreUpdate: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(BodyGame);

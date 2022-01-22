@@ -9,6 +9,7 @@ class AnswersButtons extends Component {
       arrayAnswers: [],
       buttonCorrectAnswer: '',
       buttonIncorrectAnswer: '',
+      difficulty: '',
     };
   }
 
@@ -16,16 +17,28 @@ class AnswersButtons extends Component {
     this.aleatoryAnswers();
   }
 
-  setColorsOnClick = () => {
+  setColorsOnClick = ({ target }) => {
+    const { acertouMizeravi, limparIntervalo } = this.props;
+    const { difficulty } = this.state;
     this.setState({
       buttonCorrectAnswer: '3px solid rgb(6, 240, 15)',
       buttonIncorrectAnswer: '3px solid rgb(255, 0, 0)',
     });
+    console.log(target.difficulty);
+    if (target.value === 'correct') {
+      acertouMizeravi(difficulty);
+    }
+    limparIntervalo();
   }
 
   aleatoryAnswers() {
     const { getResults } = this.props;
     if (getResults.length > 0) {
+      const { difficulty } = getResults[0];
+      // const difficulty = getResults[0].difficulty;
+      this.setState({
+        difficulty,
+      });
       const correctAnswer = getResults[0].correct_answer;
       const arrayIncorrectAnswers = getResults[0].incorrect_answers;
       // const correct_answer mudada para getCorrectAnswer por n estar em CamelCase
@@ -96,4 +109,6 @@ export default connect(mapStateToProps)(AnswersButtons);
 AnswersButtons.propTypes = {
   getResults: PropTypes.arrayOf(PropTypes.any).isRequired,
   onOffBtn: PropTypes.bool.isRequired,
+  acertouMizeravi: PropTypes.func.isRequired,
+  limparIntervalo: PropTypes.func.isRequired,
 };

@@ -8,6 +8,7 @@ export const START_LOADING = 'START_LOADING';
 export const STOP_LOADING = 'STOP_LOADING';
 export const TIME_OUT = 'TIME_OUT';
 export const TIME_IN = 'TIME_IN';
+export const NEW_SCORE = 'NEW_SCORE';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -69,4 +70,9 @@ export const timeOut = () => ({
 
 export const timeIn = () => ({
   type: TIME_IN,
+});
+
+export const newScore = (payload) => ({
+  type: NEW_SCORE,
+  payload,
 });

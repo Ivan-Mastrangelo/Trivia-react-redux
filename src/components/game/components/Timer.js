@@ -4,37 +4,21 @@ import PropTypes from 'prop-types';
 import { timeOut } from '../../../actions';
 
 class Timer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: 30,
-    };
-  }
-
   componentDidMount() {
-    this.playCounter();
+    const { playCounter } = this.props;
+    playCounter();
   }
 
   componentDidUpdate() {
-    const { isTimeEnded } = this.props;
-    const { counter } = this.state;
+    const { isTimeEnded, counter, limparIntervalo } = this.props;
     if (counter <= 0) {
-      clearInterval(this.inCount);
+      limparIntervalo();
       isTimeEnded();
     }
   }
 
-  playCounter = () => {
-    const interval = 1000;
-    this.inCount = setInterval(() => {
-      this.setState((prevState) => ({
-        counter: prevState.counter - 1,
-      }));
-    }, interval);
-  }
-
   render() {
-    const { counter } = this.state;
+    const { counter } = this.props;
     return (
       <div>
         <span>Tempo</span>
@@ -51,8 +35,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 Timer.propTypes = {
   isTimeEnded: PropTypes.func.isRequired,
+  limparIntervalo: PropTypes.func.isRequired,
+  counter: PropTypes.number.isRequired,
+  playCounter: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Timer);
 
-// Referências: https://www.youtube.com/watch?v=NAx76xx40jM e
+// Referência: https://www.youtube.com/watch?v=NAx76xx40jM

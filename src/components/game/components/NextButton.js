@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class NextButton extends Component {
   render() {
     const { statusButton, handleClickIndex } = this.props;
-    console.log(index);
     return (
       <button
         type="button"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import NextButton from './NextButton';
 
 class AnswersButtons extends Component {
   constructor() {
@@ -103,13 +104,7 @@ class AnswersButtons extends Component {
             );
           })}
         </div>
-        <button
-          type="button"
-          data-testid="btn-next"
-          style={ { visibility: statusButton } }
-        >
-          Next
-        </button>
+        <NextButton statusButton={ statusButton } />
       </>
     );
   }

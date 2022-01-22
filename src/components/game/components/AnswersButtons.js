@@ -10,6 +10,7 @@ class AnswersButtons extends Component {
       buttonCorrectAnswer: '',
       buttonIncorrectAnswer: '',
       difficulty: '',
+      statusButton: 'hidden',
     };
   }
 
@@ -24,11 +25,13 @@ class AnswersButtons extends Component {
       buttonCorrectAnswer: '3px solid rgb(6, 240, 15)',
       buttonIncorrectAnswer: '3px solid rgb(255, 0, 0)',
     });
-    console.log(target.difficulty);
     if (target.value === 'correct') {
       acertouMizeravi(difficulty);
     }
     limparIntervalo();
+    this.setState({
+      statusButton: 'visible',
+    });
   }
 
   aleatoryAnswers() {
@@ -58,43 +61,56 @@ class AnswersButtons extends Component {
   }
 
   render() {
-    const { buttonCorrectAnswer, buttonIncorrectAnswer, arrayAnswers } = this.state;
+    const { buttonCorrectAnswer,
+      buttonIncorrectAnswer,
+      arrayAnswers,
+      statusButton,
+    } = this.state;
     const { onOffBtn } = this.props;
     return (
-      <div
-        data-testid="answer-options"
-      >
-        {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, index) => {
-          if (correctAnswer) {
+      <>
+        <div
+          data-testid="answer-options"
+        >
+          {arrayAnswers.map(({ correctAnswer, incorrectAnswers }, index) => {
+            if (correctAnswer) {
+              return (
+                <button
+                  key={ correctAnswer }
+                  type="button"
+                  value="correct"
+                  data-testid="correct-answer"
+                  onClick={ this.setColorsOnClick }
+                  style={ { border: buttonCorrectAnswer } }
+                  disabled={ onOffBtn }
+                >
+                  {correctAnswer}
+                </button>
+              );
+            }
             return (
               <button
-                key={ correctAnswer }
+                key={ incorrectAnswers }
                 type="button"
-                value="correct"
-                data-testid="correct-answer"
+                value="incorrect"
+                data-testid={ `wrong-answer-${index}` }
                 onClick={ this.setColorsOnClick }
-                style={ { border: buttonCorrectAnswer } }
+                style={ { border: buttonIncorrectAnswer } }
                 disabled={ onOffBtn }
               >
-                {correctAnswer}
+                {incorrectAnswers}
               </button>
             );
-          }
-          return (
-            <button
-              key={ incorrectAnswers }
-              type="button"
-              value="incorrect"
-              data-testid={ `wrong-answer-${index}` }
-              onClick={ this.setColorsOnClick }
-              style={ { border: buttonIncorrectAnswer } }
-              disabled={ onOffBtn }
-            >
-              {incorrectAnswers}
-            </button>
-          );
-        })}
-      </div>
+          })}
+        </div>
+        <button
+          type="button"
+          data-testid="btn-next"
+          style={ { visibility: statusButton } }
+        >
+          Next
+        </button>
+      </>
     );
   }
 }

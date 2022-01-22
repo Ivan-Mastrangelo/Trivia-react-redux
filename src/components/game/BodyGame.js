@@ -55,8 +55,6 @@ class BodyGame extends Component {
     this.setState({
       points: sumPoints,
     });
-    console.log(sumPoints);
-    console.log('teste');
     const url = `https://www.gravatar.com/avatar/${md5(getEmail).toString()}`;
     const obj = {
       name: getName,

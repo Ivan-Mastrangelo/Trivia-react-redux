@@ -52,7 +52,8 @@ class AnswersButtons extends Component {
 
   aleatoryAnswers(index) {
     const { getResults } = this.props;
-    if (getResults.length > 0) {
+    const MAGIC_NUMBER = 5;
+    if (getResults.length > 0 && index < MAGIC_NUMBER) {
       const { difficulty } = getResults[index];
       console.log(difficulty);
       // const difficulty = getResults[0].difficulty;

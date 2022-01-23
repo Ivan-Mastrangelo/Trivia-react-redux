@@ -56,7 +56,6 @@ class AnswersButtons extends Component {
     const MAGIC_NUMBER = 5;
     if (getResults.length > 0 && index < MAGIC_NUMBER) {
       const { difficulty } = getResults[index];
-      console.log(difficulty);
       // const difficulty = getResults[0].difficulty;
       this.setState({
         difficulty,

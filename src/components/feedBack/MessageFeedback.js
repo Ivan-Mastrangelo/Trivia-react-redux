@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 class MessageFeedback extends Component {
   render() {
-    const { getUserGoal } = this.props;
+    const { getUserGoal, getUserScore } = this.props;
     const scoreLessThanThree = 'Could be better...';
     const scoreHigherThanThree = 'Well Done!';
     const MAGIC_NUMBER = 3;
@@ -20,27 +20,22 @@ class MessageFeedback extends Component {
               ? scoreHigherThanThree : scoreLessThanThree
           }
         </p>
-
-        <div>
-          {/*  requisito 14  */}
-          <p feedback-total-score>
-            { /* valor do placar final */ }
-            Placar final:
-            {' '}
-            { numberQuestionCorrect }
-          </p>
-          <p data-testid="feedback-total-question">
-            {/*  numero de perguntas acertadas  */}
-            voce acertou:
-            {' '}
-            {
-              numberQuestionCorrect
-            /*  O número de perguntas que a pessoa acertou deve ser exibido */
-            }
-
-          </p>
-        </div>
-
+        <p>
+          Número de acertos:
+          <span
+            data-testid="feedback-total-question"
+          >
+            {numberQuestionCorrect}
+          </span>
+        </p>
+        <p>
+          Número de pontos:
+          <span
+            data-testid="feedback-total-score"
+          >
+            {getUserScore}
+          </span>
+        </p>
       </div>
     );
   }
@@ -49,10 +44,12 @@ class MessageFeedback extends Component {
 const mapStateToProps = (state) => ({
   // getUserScore: state.user.score,
   getUserGoal: state.player.assertions,
+  getUserScore: state.player.score,
 });
 
 MessageFeedback.propTypes = {
   getUserGoal: PropTypes.number.isRequired,
+  getUserScore: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(MessageFeedback);

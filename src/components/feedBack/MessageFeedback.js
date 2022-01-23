@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class MessageFeedback extends Component {
+class MessageFeedback extends Component {
   render() {
+    const { getUserGoal } = this.props;
     const scoreLessThanThree = 'Could be better...';
     const scoreHigherThanThree = 'Well Done!';
     const MAGIC_NUMBER = 3;
-    const MAX_MAGIC_NUMBER = 5;
-    const numberQuestionCorrect = Math.random().toFixed(1) * (MAX_MAGIC_NUMBER - 0) + 0;
+    const numberQuestionCorrect = getUserGoal;
     return (
       <div>
         {/*  requisito 13  */}
@@ -45,9 +46,13 @@ export default class MessageFeedback extends Component {
   }
 }
 
-/* const mapStateToProps = (state) => ({
-  getUserScore: state.user.score
-  getUserQuestion: state.
-}) */
+const mapStateToProps = (state) => ({
+  // getUserScore: state.user.score,
+  getUserGoal: state.player.assertions,
+});
 
-/* export default connect(mapStateToProps, null)(MessageFeedback) */
+MessageFeedback.propTypes = {
+  getUserGoal: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(MessageFeedback);

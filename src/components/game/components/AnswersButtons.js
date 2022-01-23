@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NextButton from './NextButton';
-import { actionIndex } from '../../../actions';
+import { actionIndex, goalCounter } from '../../../actions';
 
 class AnswersButtons extends Component {
   constructor() {
@@ -23,7 +23,7 @@ class AnswersButtons extends Component {
   }
 
   setColorsOnClick = ({ target }) => {
-    const { acertouMizeravi, limparIntervalo } = this.props;
+    const { acertouMizeravi, limparIntervalo, goalScore } = this.props;
     const { difficulty } = this.state;
     this.setState({
       buttonCorrectAnswer: '3px solid rgb(6, 240, 15)',
@@ -31,6 +31,7 @@ class AnswersButtons extends Component {
     });
     if (target.value === 'correct') {
       acertouMizeravi(difficulty);
+      goalScore();
     }
     limparIntervalo();
     this.setState({
@@ -139,6 +140,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getIndex: (index) => dispatch(actionIndex(index)),
+  goalScore: () => dispatch(goalCounter()),
 });
 
 AnswersButtons.propTypes = {
@@ -147,6 +149,7 @@ AnswersButtons.propTypes = {
   acertouMizeravi: PropTypes.func.isRequired,
   limparIntervalo: PropTypes.func.isRequired,
   getIndex: PropTypes.func.isRequired,
+  goalScore: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AnswersButtons);

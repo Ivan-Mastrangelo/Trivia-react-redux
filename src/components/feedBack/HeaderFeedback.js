@@ -5,7 +5,7 @@ import md5 from 'crypto-js/md5';
 
 class HeaderFeedback extends Component {
   render() {
-    const { getUserName, getUserEmail } = this.props;
+    const { getUserName, getUserEmail, getUserScore } = this.props;
     return (
       <div>
         <header>
@@ -17,12 +17,15 @@ class HeaderFeedback extends Component {
             nome do usuario:
             {' '}
             { getUserName }
+            {' '}
           </span>
           { /* placar do usuario com o VALOR ATUAL */ }
-          <span data-testid="header-score">
+          <span>
             Placar:
             {' '}
-            0
+          </span>
+          <span data-testid="header-score">
+            { getUserScore }
           </span>
 
         </header>
@@ -34,6 +37,7 @@ class HeaderFeedback extends Component {
 const mapStateToProps = (state) => ({
   getUserName: state.player.name,
   getUserEmail: state.player.gravatarEmail,
+  getUserScore: state.player.score,
 });
 
 export default connect(mapStateToProps, null)(HeaderFeedback);
@@ -41,4 +45,5 @@ export default connect(mapStateToProps, null)(HeaderFeedback);
 HeaderFeedback.propTypes = {
   getUserName: PropTypes.string.isRequired,
   getUserEmail: PropTypes.string.isRequired,
+  getUserScore: PropTypes.number.isRequired,
 };

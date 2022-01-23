@@ -14,7 +14,7 @@ class ButtonAndTitleRaking extends Component {
   render() {
     return (
       <div>
-        {/*  requisito 16  */}
+        {/*  requisito 16  ola '-' */}
         <h1 data-testid="ranking-title">componente RANKING</h1>
         {/* requisito 17 */}
         <button

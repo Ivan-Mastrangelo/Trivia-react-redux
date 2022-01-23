@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 class NextButton extends Component {
   handleClick = () => {
@@ -8,16 +9,22 @@ class NextButton extends Component {
   }
 
   render() {
-    const { statusButton } = this.props;
+    const { statusButton, index } = this.props;
+    const MAGIC_NUMBER = 4;
     return (
-      <button
-        type="button"
-        data-testid="btn-next"
-        style={ { visibility: statusButton } }
-        onClick={ () => this.handleClick() }
-      >
-        Next
-      </button>
+      <div>
+        <button
+          type="button"
+          data-testid="btn-next"
+          style={ { visibility: statusButton } }
+          onClick={ () => this.handleClick() }
+        >
+          Next
+        </button>
+        {
+          index > MAGIC_NUMBER && <Redirect to="/feedback" />
+        }
+      </div>
     );
   }
 }
@@ -25,6 +32,7 @@ class NextButton extends Component {
 NextButton.propTypes = {
   statusButton: PropTypes.string.isRequired,
   handleClickIndex: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default NextButton;

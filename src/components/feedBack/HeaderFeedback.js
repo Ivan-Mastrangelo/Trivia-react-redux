@@ -9,7 +9,7 @@ class HeaderFeedback extends Component {
     return (
       <div>
         <header>
-          {/*  img vinda do gravatar  */}
+          {/*  img vinda do gravatar 01  */}
           <img src={ `https://www.gravatar.com/avatar/${md5(getUserEmail).toString()}` } alt="imagem do gravatar" data-testid="header-profile-picture" />
 
           {/*  NOME do usuario  */}

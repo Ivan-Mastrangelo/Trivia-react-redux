@@ -10,6 +10,7 @@ export const TIME_OUT = 'TIME_OUT';
 export const TIME_IN = 'TIME_IN';
 export const NEW_SCORE = 'NEW_SCORE';
 export const INDEX_QUESTION = 'INDEX_QUESTION';
+export const GOAL_COUNTER = 'GOAL_COUNTER';
 
 export const actionUser = (payload) => ({
   type: USER_INFO,
@@ -50,6 +51,10 @@ export const timeIn = () => ({
 export const newScore = (payload) => ({
   type: NEW_SCORE,
   payload,
+});
+
+export const goalCounter = () => ({
+  type: GOAL_COUNTER,
 });
 
 export const requestApiToken = () => (dispatch) => {

@@ -25,4 +25,28 @@ Um jogo de perguntas e respostas baseado no jogo **Trivia** (tipo um show do mil
   - Visualizar a página de ranking, se quiser, ao final de cada jogo.
   - Configurar algumas opções para o jogo em uma tela de configuração acessível a partir do cabeçalho do app.
 
+### Para executá-lo localmente
+
+Basta clonar o projeto:
+```
+git@github.com:Ivan-Mastrangelo/Trivia-react-redux
+```
+Entrar no diretório criado:
+```
+  cd Trivia-react-redux
+  ```
+Instalar as dependências do projeto:
+```
+  npm install
+  ```
+E iniciar o servidor:
+```
+  npm run start
+  ```
+Após esses comandos, acesse no navegador:
+```
+  http://localhost:3000/
+  ```
+---
+
 ---

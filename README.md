@@ -29,7 +29,7 @@ Um jogo de perguntas e respostas baseado no jogo **Trivia** (tipo um show do mil
 
 Basta clonar o projeto:
 ```
-git@github.com:Ivan-Mastrangelo/Trivia-react-redux
+git@github.com:Ivan-Mastrangelo/Trivia-react-redux.git
 ```
 Entrar no diretório criado:
 ```
